@@ -2,6 +2,7 @@ using RefactorBEcapstone.Contexts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RefactorBEcapstone.Models;
+using RefactorBEcapstone;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,17 +33,29 @@ builder.Services.AddAuthentication()
     options.SaveTokens = true;
 });
 
-
+builder.Services.AddCors(policy =>
+{
+    policy.AddPolicy("default", options =>
+    {
+        options.WithOrigins("https://localhost:5173", "https://localhost:5200", "https://discord.com", "https://localhost:3000")
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials();
+    });
+});
 
 builder.Services.AddControllers()
                 .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNameCaseInsensitive = true);
 
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+app.MapIdentityApi<AppUser>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
