@@ -1,6 +1,13 @@
-﻿namespace RefactorBEcapstone.Models
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RefactorBEcapstone.Models
 {
-    public class Gift
+    public class Gift : Auditable
     {
         public int Id { get; set; }
         public string GiftName { get; set; }
