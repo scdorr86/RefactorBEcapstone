@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace RefactorBEcapstone.Models
 {
-    public class ChristmasYear : Auditable
+    public class ChristmasYear
     {
         public int Id { get; set; }
         public string ListYear { get; set; }
         public decimal YearBudget { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public AppUser User { get; set; }
         public List<ChristmasList> ChristmasLists { get; set; }
         public decimal ListsTotal => ChristmasLists?.Sum(l => l.ListTotal) ?? 0;

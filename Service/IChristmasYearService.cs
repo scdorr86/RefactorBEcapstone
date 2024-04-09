@@ -5,6 +5,6 @@ namespace RefactorBEcapstone.Service
 {
     public interface IChristmasYearService
     {
-        Task<YearResponse> CreateChristmasYear(CreateYearRequest yearRequest, string userId);
+        Task<YearResponse> CreateChristmasYear(CreateYearRequest yearRequest);
     }
 }

@@ -17,7 +17,7 @@ namespace RefactorBEcapstone.Models
         public Giftee Giftee { get; set; }
         public List<Gift> Gifts { get; set; }
         public decimal ListTotal => Gifts?.Sum(g => g.Price) ?? 0;
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public AppUser User { get; set; }
     }
 }

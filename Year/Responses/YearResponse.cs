@@ -12,7 +12,7 @@ namespace RefactorBEcapstone.Year.Responses
         public int Id { get; set; }
         public string ListYear { get; set; }
         public decimal YearBudget { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         public decimal ListsTotal {  get; set; }
         public decimal BudgetVar {  get; set; }

@@ -12,8 +12,8 @@ using RefactorBEcapstone.Contexts;
 namespace RefactorBEcapstone.Migrations
 {
     [DbContext(typeof(RefactorDbContext))]
-    [Migration("20240326213102_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240409205104_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -263,17 +263,34 @@ namespace RefactorBEcapstone.Migrations
                     b.Property<int>("ChristmasYearId")
                         .HasColumnType("integer");
 
+                    b.Property<string>("CreatedById")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<int>("GifteeId")
                         .HasColumnType("integer");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("ListName")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                    b.Property<string>("UpdatedById")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.Property<string>("UserId1")
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -283,7 +300,7 @@ namespace RefactorBEcapstone.Migrations
 
                     b.HasIndex("GifteeId");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("ChristmasLists");
                 });
@@ -300,10 +317,7 @@ namespace RefactorBEcapstone.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("UserId1")
+                    b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -312,7 +326,7 @@ namespace RefactorBEcapstone.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("ChristmasYears");
                 });
@@ -325,6 +339,16 @@ namespace RefactorBEcapstone.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("CreatedById")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("GiftName")
                         .IsRequired()
                         .HasColumnType("text");
@@ -333,6 +357,9 @@ namespace RefactorBEcapstone.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("OrderedFrom")
                         .IsRequired()
                         .HasColumnType("text");
@@ -340,16 +367,20 @@ namespace RefactorBEcapstone.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                    b.Property<string>("UpdatedById")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.Property<string>("UserId1")
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Gifts");
                 });
@@ -362,24 +393,41 @@ namespace RefactorBEcapstone.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("CreatedById")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                    b.Property<string>("UpdatedById")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.Property<string>("UserId1")
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Giftees");
                 });
@@ -466,7 +514,7 @@ namespace RefactorBEcapstone.Migrations
 
                     b.HasOne("RefactorBEcapstone.Models.AppUser", "User")
                         .WithMany("ChristmasList")
-                        .HasForeignKey("UserId1")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -481,7 +529,7 @@ namespace RefactorBEcapstone.Migrations
                 {
                     b.HasOne("RefactorBEcapstone.Models.AppUser", "User")
                         .WithMany("ChristmasYear")
-                        .HasForeignKey("UserId1")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -492,7 +540,7 @@ namespace RefactorBEcapstone.Migrations
                 {
                     b.HasOne("RefactorBEcapstone.Models.AppUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId1")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -503,7 +551,7 @@ namespace RefactorBEcapstone.Migrations
                 {
                     b.HasOne("RefactorBEcapstone.Models.AppUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId1")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
