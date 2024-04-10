@@ -27,11 +27,11 @@ namespace RefactorBEcapstone.Controllers
         [ProducesResponseType(typeof(ApiResponse<YearResponse>), 200)]
         [ProducesResponseType(typeof(ApiResponse<bool>), 500)]
 
-        public async Task<IActionResult> CreateYear(CreateYearRequest yearRequest, string userid)
+        public async Task<IActionResult> CreateYear([FromBody] CreateYearRequest yearRequest)
         {
             try
             {
-                var result = await _christmasYearService.CreateChristmasYear(yearRequest, userid);
+                var result = await _christmasYearService.CreateChristmasYear(yearRequest);
                 return Ok(ApiResponse<YearResponse>.SuccessResponse(result, "Year was created successfully"));
 
             } catch (Exception ex)

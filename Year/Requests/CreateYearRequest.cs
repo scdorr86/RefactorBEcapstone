@@ -10,6 +10,6 @@ namespace RefactorBEcapstone.Year.Requests
     {
         public string ListYear { get; set; }
         public decimal YearBudget { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
     }
 }

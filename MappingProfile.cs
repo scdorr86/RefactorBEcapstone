@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using RefactorBEcapstone.Models;
+using RefactorBEcapstone.Year.Requests;
 using RefactorBEcapstone.Year.Responses;
 
 namespace RefactorBEcapstone
@@ -14,6 +15,7 @@ namespace RefactorBEcapstone
         public void CreateYearMaps()
         {
             _ = CreateMap<ChristmasYear, YearResponse>();
+            _ = CreateMap<CreateYearRequest, ChristmasYear>();
         }
     }
 }

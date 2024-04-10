@@ -13,7 +13,7 @@ namespace RefactorBEcapstone.Models
         public string GiftName { get; set; }
         public decimal Price { get; set; }
         public string ImageUrl { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public AppUser User { get; set; }
         public List<ChristmasList> ChristmasLists { get; set; }
         public string OrderedFrom { get; set; }

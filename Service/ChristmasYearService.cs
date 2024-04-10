@@ -10,18 +10,19 @@ namespace RefactorBEcapstone.Service
     {
         private readonly IMapper _mapper;
         private readonly IGenericRepository<ChristmasYear> _yearRepo;
+        private readonly IGenericRepository<AppUser> _userRepo;
 
-        public ChristmasYearService(IMapper mapper, IGenericRepository<ChristmasYear> yearRepo)
+        public ChristmasYearService(IMapper mapper, IGenericRepository<ChristmasYear> yearRepo, IGenericRepository<AppUser> userRepo)
         {
             _mapper = mapper;
             _yearRepo = yearRepo;
+            _userRepo = userRepo;
         }
 
-        public async Task<YearResponse> CreateChristmasYear(CreateYearRequest yearRequest, string userId)
+        public async Task<YearResponse> CreateChristmasYear(CreateYearRequest yearRequest)
         {
             var newYear = _mapper.Map<ChristmasYear>(yearRequest);
-            newYear.CreatedById = userId;
-            newYear.UpdatedById = userId;
+            
 
             var result = await _yearRepo.AddAsync(newYear);
             var mappedResult = _mapper.Map<YearResponse>(result);

@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RefactorBEcapstone.Models;
 using RefactorBEcapstone;
+using RefactorBEcapstone.Repositories;
+using RefactorBEcapstone.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,6 +54,11 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddTransient<IGenericRepository<ChristmasYear>, GenericRepository<ChristmasYear>>();
+builder.Services.AddTransient<IChristmasYearService, ChristmasYearService>();
+builder.Services.AddTransient<IGenericRepository<AppUser>, GenericRepository<AppUser>>();
+
 
 var app = builder.Build();
 
