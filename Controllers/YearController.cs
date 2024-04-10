@@ -37,7 +37,7 @@ namespace RefactorBEcapstone.Controllers
             } catch (Exception ex)
             {
                 _logger.LogError(ex.Message, ex);
-                return StatusCode(500, ApiResponse<bool>.Unknown("could not create christmas year. please try again."));
+                return StatusCode(500, ApiResponse<bool>.Unknown("Could not create christmas year. please try again."));
             }
         }
     }
