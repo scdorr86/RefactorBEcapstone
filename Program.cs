@@ -57,6 +57,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddTransient<IGenericRepository<ChristmasYear>, GenericRepository<ChristmasYear>>();
 builder.Services.AddTransient<IChristmasYearService, ChristmasYearService>();
+builder.Services.AddTransient<IGenericRepository<ChristmasList>, GenericRepository<ChristmasList>>();
+builder.Services.AddTransient<IListService, ListService>();
 builder.Services.AddTransient<IGenericRepository<AppUser>, GenericRepository<AppUser>>();
 
 
