@@ -14,10 +14,10 @@ namespace RefactorBEcapstone.Controllers
     public class ListController : BaseController
     {
         private readonly IListService _listService;
-        private readonly ILogger _logger;
+        private readonly ILogger<ListController> _logger;
         private readonly UserManager<AppUser> _userManager;
 
-        public ListController(IListService listService, ILogger logger, UserManager<AppUser> userManager)
+        public ListController(IListService listService, ILogger<ListController> logger, UserManager<AppUser> userManager)
         {
             _listService = listService;
             _logger = logger;
