@@ -38,7 +38,10 @@ namespace RefactorBEcapstone.Service
             }
 
             listToUpdate.ListName = !string.IsNullOrEmpty(request.ListName) ? request.ListName : listToUpdate.ListName;
+            listToUpdate.ChristmasYearId = request.ChristmasYearId != null && request.ChristmasYearId != 0 ? request.ChristmasYearId : listToUpdate.ChristmasYearId;
+            listToUpdate.GifteeId = request.GifteeId != null && request.GifteeId != 0 ? request.GifteeId : listToUpdate.GifteeId;
 
+            await _listRepo.Update(listToUpdate);
             return _mapper.Map<ListResponse>(listToUpdate);
         }
     }
