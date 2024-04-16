@@ -18,5 +18,27 @@ namespace RefactorBEcapstone.Repositories
                 await _context.SaveChangesAsync();
             return model;
         }
+
+        public async Task<TEntity?> GetByIdAsync(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null)
+        {
+            var query = _context.Set<TEntity>().AsQueryable();
+
+            if (include != null)
+            {
+                query = include(query);
+            }
+
+            return await query.FirstOrDefaultAsync(filter);
+        }
+
+        public async Task<TEntity> Update(TEntity model, bool saveChanges = true)
+        {
+            _context.Entry(model).State = EntityState.Modified;
+            if (saveChanges)
+            {
+                await _context.SaveChangesAsync();
+            }
+            return model;
+        }
     }
 }

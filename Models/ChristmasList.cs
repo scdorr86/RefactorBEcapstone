@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RefactorBEcapstone.Models
 {
-    public class ChristmasList : Auditable
+    public class ChristmasList
     {
         public int Id { get; set; }
         public string ListName { get; set; }
