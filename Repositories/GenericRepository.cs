@@ -40,5 +40,20 @@ namespace RefactorBEcapstone.Repositories
             }
             return model;
         }
+
+        public async Task<IEnumerable<TEntity>> GetAllAsync(Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null)
+        {
+            return await Task.Run(() => {
+                var query = _context.Set<TEntity>().AsQueryable();
+
+                if (include != null)
+                {
+                    query = include(query);
+                }
+
+                return query.ToList();
+            });
+        }
+
     }
 }
