@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using RefactorBEcapstone.List.Responses;
 using RefactorBEcapstone.Models;
 using RefactorBEcapstone.Service;
 using RefactorBEcapstone.Year.Requests;
@@ -38,6 +39,24 @@ namespace RefactorBEcapstone.Controllers
             {
                 _logger.LogError(ex.Message, ex);
                 return StatusCode(500, ApiResponse<bool>.Unknown("Could not create christmas year. please try again."));
+            }
+        }
+
+        [HttpGet("Years")]
+        [ProducesResponseType(typeof(ApiResponse<List<YearResponse>>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<bool>), 500)]
+
+        public async Task<IActionResult> GetYears()
+        {
+            try
+            {
+                var result = await _christmasYearService.GetAllYears();
+                return Ok(ApiResponse<List<YearResponse>>.SuccessResponse(result, "Success"));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return StatusCode(500, ApiResponse<bool>.Unknown("Could not return Years. Please try again"));
             }
         }
     }
