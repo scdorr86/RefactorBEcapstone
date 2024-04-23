@@ -9,5 +9,6 @@ namespace RefactorBEcapstone.Repositories
         Task<TEntity> Update(TEntity objModel, bool saveChanges = true);
 
         Task<TEntity> GetByIdAsync(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null);
+        Task<IEnumerable<TEntity>> GetAllAsync(Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null);
     }
 }

@@ -28,5 +28,11 @@ namespace RefactorBEcapstone.Service
             var mappedResult = _mapper.Map<YearResponse>(result);
             return mappedResult;
         }
+
+        public async Task<List<YearResponse>> GetAllYears()
+        {
+            var years = await _yearRepo.GetAllAsync();
+            return _mapper.Map<List<YearResponse>>(years);
+        }
     }
 }

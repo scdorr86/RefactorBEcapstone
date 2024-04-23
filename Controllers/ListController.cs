@@ -65,5 +65,23 @@ namespace RefactorBEcapstone.Controllers
                 return StatusCode(500, ApiResponse<bool>.Unknown("Failed to update list. Please try again"));
             }
         }
+
+        [HttpGet("lists")]
+        [ProducesResponseType(typeof(ApiResponse<List<ListResponse>>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<bool>), 500)]
+
+        public async Task<IActionResult> GetLists()
+        {
+            try
+            {
+                var result = await _listService.GetAllLists();
+                return Ok(ApiResponse<List<ListResponse>>.SuccessResponse(result, "Success"));
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return StatusCode(500, ApiResponse<bool>.Unknown("Could not return Lists. Please try again"));
+            }
+        }
     }
 }
