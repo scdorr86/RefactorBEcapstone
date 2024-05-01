@@ -39,7 +39,9 @@ builder.Services.AddCors(policy =>
 {
     policy.AddPolicy("default", options =>
     {
-        options.WithOrigins("https://localhost:5173", "https://localhost:5200", "https://discord.com", "https://localhost:3000")
+        options.WithOrigins("http://localhost:3000", "https://localhost:5173", 
+                            "https://localhost:5200", "https://discord.com", 
+                            "https://localhost:3000", "https://localhost:7202")
         .AllowAnyHeader()
         .AllowAnyMethod()
         .AllowCredentials();
@@ -72,6 +74,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("default");
 
 app.UseHttpsRedirection();
 
