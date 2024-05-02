@@ -5,6 +5,7 @@ using RefactorBEcapstone.Models;
 using RefactorBEcapstone;
 using RefactorBEcapstone.Repositories;
 using RefactorBEcapstone.Service;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -62,6 +63,8 @@ builder.Services.AddTransient<IChristmasYearService, ChristmasYearService>();
 builder.Services.AddTransient<IGenericRepository<ChristmasList>, GenericRepository<ChristmasList>>();
 builder.Services.AddTransient<IListService, ListService>();
 builder.Services.AddTransient<IGenericRepository<AppUser>, GenericRepository<AppUser>>();
+builder.Services.AddTransient<IGenericRepository<Gift>, GenericRepository<Gift>>();
+builder.Services.AddTransient<IGiftService, GiftService>(); 
 
 
 var app = builder.Build();
