@@ -30,7 +30,8 @@ namespace RefactorBEcapstone.Service
 
         public async Task<List<GiftResponse>> GetAllGifts()
         {
-
+            var gifts = await _giftRepo.GetAllAsync();
+            return _mapper.Map<List<GiftResponse>>(gifts);
         }
     }
 }
