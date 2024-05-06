@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using RefactorBEcapstone.Gift.Requests;
 using RefactorBEcapstone.Gift.Responses;
+using RefactorBEcapstone.Giftee.Requests;
+using RefactorBEcapstone.Giftee.Responses;
 using RefactorBEcapstone.List.Requests;
 using RefactorBEcapstone.List.Responses;
 using RefactorBEcapstone.Models;
@@ -16,6 +18,7 @@ namespace RefactorBEcapstone
             CreateYearMaps();
             CreateListMaps();
             CreateGiftMaps();
+            CreateGifteeMaps();
         }
 
         public void CreateYearMaps()
@@ -34,6 +37,12 @@ namespace RefactorBEcapstone
         {
             _ = CreateMap<Models.Gift, GiftResponse>();
             _ = CreateMap<GiftRequest, Models.Gift>();
+        }
+
+        public void CreateGifteeMaps()
+        {
+            _ = CreateMap<Models.Giftee, GifteeResponse>();
+            _ = CreateMap<GifteeRequest, Models.Giftee>();
         }
     }
 }
