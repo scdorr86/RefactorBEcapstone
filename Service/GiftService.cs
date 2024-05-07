@@ -22,7 +22,7 @@ namespace RefactorBEcapstone.Service
         public async Task<GiftResponse> CreateGift(GiftRequest giftRequest)
         {
             var newGift = _mapper.Map<Models.Gift>(giftRequest);
-
+            
             var result = await _giftRepo.AddAsync(newGift);
             var mappedResult = _mapper.Map<GiftResponse>(result);
             return mappedResult;

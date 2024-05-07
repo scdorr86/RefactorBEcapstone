@@ -64,7 +64,9 @@ builder.Services.AddTransient<IGenericRepository<ChristmasList>, GenericReposito
 builder.Services.AddTransient<IListService, ListService>();
 builder.Services.AddTransient<IGenericRepository<AppUser>, GenericRepository<AppUser>>();
 builder.Services.AddTransient<IGenericRepository<Gift>, GenericRepository<Gift>>();
-builder.Services.AddTransient<IGiftService, GiftService>(); 
+builder.Services.AddTransient<IGiftService, GiftService>();
+builder.Services.AddTransient<IGenericRepository<Giftee>, GenericRepository<Giftee>>();
+builder.Services.AddTransient<IGifteeService, GifteeService>();
 
 
 var app = builder.Build();
