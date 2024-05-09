@@ -10,6 +10,6 @@ namespace RefactorBEcapstone.Contexts
         public DbSet<ChristmasList> ChristmasLists { get; set; }
         public DbSet<ChristmasYear> ChristmasYears { get; set; }
         public DbSet<Models.Gift> Gifts { get; set; }
-        public DbSet<Giftee> Giftees { get; set; }
+        public DbSet<Models.Giftee> Giftees { get; set; }
     }
 }
