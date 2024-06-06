@@ -8,5 +8,6 @@ namespace RefactorBEcapstone.Service
         Task<GiftResponse> CreateGift(GiftRequest request);
         Task<List<GiftResponse>> GetAllGifts();
         Task<GiftResponse> UpdateGift(int giftId, UpdateGiftRequest request);
+        Task<GiftResponse> GetGiftById(int giftId);
     }
 }

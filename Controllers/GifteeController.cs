@@ -56,5 +56,46 @@ namespace RefactorBEcapstone.Controllers
                 return StatusCode(500, ApiResponse<bool>.Unknown("Could not create new giftee, please try again."));
             }
         }
+
+        [HttpPatch("update/{gifteeId}")]
+        [ProducesResponseType(typeof(ApiResponse<GifteeResponse>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<bool>), 500)]
+
+        public async Task<IActionResult> UpdateGiftee([FromRoute] int gifteeId, [FromBody] UpdateGifteeRequest request)
+        {
+            if (gifteeId <= 0)
+                return BadRequest(ApiResponse<bool>.BadRequest("Invalid Giftee Id."));
+
+            try
+            {
+                var result = await _gifteeService.UpdateGiftee(gifteeId, request);
+                return Ok(ApiResponse<GifteeResponse>.SuccessResponse(result, "Giftee was updated successfully."));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return StatusCode(500, ApiResponse<bool>.Unknown("Could not update giftee, please try again."));
+            }
+        }
+
+        [HttpGet("{gifteeId}")]
+        [ProducesResponseType(typeof(ApiResponse<GifteeResponse>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<bool>), 500)]
+
+        public async Task<IActionResult> GetGifteeById([FromRoute] int gifteeId)
+        {
+            if (gifteeId <= 0) return BadRequest(ApiResponse<bool>.BadRequest("Invalid Giftee Id."));
+
+            try
+            {
+                var result = await _gifteeService.GetGifteeById(gifteeId);
+                return Ok(ApiResponse<GifteeResponse>.SuccessResponse(result, "Success."));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return StatusCode(500, ApiResponse<bool>.Unknown("Could not retrieve giftee, please try again."));
+            }
+        }
     }
 }

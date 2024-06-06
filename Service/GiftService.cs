@@ -48,7 +48,19 @@ namespace RefactorBEcapstone.Service
             giftToUpdate.ImageUrl = !string.IsNullOrEmpty(request.ImageUrl) ? request.ImageUrl : giftToUpdate.ImageUrl;
             giftToUpdate.OrderedFrom = !string.IsNullOrEmpty(request.OrderedFrom) ? request.OrderedFrom : giftToUpdate.OrderedFrom;
 
+            await _giftRepo.Update(giftToUpdate);
+
             return _mapper.Map<GiftResponse>(giftToUpdate);
+        }
+
+        public async Task<GiftResponse> GetGiftById(int giftId)
+        {
+            var gift = await _giftRepo.GetByIdAsync(x => x.Id == giftId);
+
+            if (gift == null)
+                throw new ApplicationException("Gift not found.");
+
+            return _mapper.Map<GiftResponse>(gift);
         }
     }
 }
