@@ -32,5 +32,31 @@ namespace RefactorBEcapstone.Service
             var mappedResult = _mapper.Map<GifteeResponse>(result);
             return mappedResult;
         }
+
+        public async Task<GifteeResponse> UpdateGiftee(int gifteeId, UpdateGifteeRequest request)
+        {
+            var gifteeToUpdate = await _gifteeRepo.GetByIdAsync(x => x.Id == gifteeId);
+
+            if(gifteeToUpdate == null)
+            {
+                throw new ApplicationException("Giftee Not Found.");
+            }
+
+            gifteeToUpdate.FirstName = !string.IsNullOrEmpty(request.FirstName) ? request.FirstName : gifteeToUpdate.FirstName;
+            gifteeToUpdate.LastName = !string.IsNullOrEmpty(request.LastName) ? request.LastName : gifteeToUpdate.LastName;
+
+            await _gifteeRepo.Update(gifteeToUpdate);
+
+            return _mapper.Map<GifteeResponse>(gifteeToUpdate);
+        }
+
+        public async Task<GifteeResponse> GetGifteeById(int id)
+        {
+            var giftee = await _gifteeRepo.GetByIdAsync(x => x.Id == id);
+
+            if (giftee == null) throw new ApplicationException("Giftee Not Found.");
+
+            return _mapper.Map<GifteeResponse>(giftee);
+        }
     }
 }

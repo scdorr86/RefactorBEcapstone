@@ -58,5 +58,47 @@ namespace RefactorBEcapstone.Controllers
                 return StatusCode(500, ApiResponse<bool>.Unknown("Gift could not be created."));
             }
         }
+
+        [HttpPatch("update/{giftId}")]
+        [ProducesResponseType(typeof(ApiResponse<GiftResponse>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<bool>),500)]
+
+        public async Task<IActionResult> UpdateGift([FromRoute] int giftId, [FromBody] UpdateGiftRequest request)
+        {
+            if (giftId <= 0)
+                return BadRequest(ApiResponse<bool>.BadRequest("Invalid Gift Id."));
+
+            try
+            {
+                var result = await _giftService.UpdateGift(giftId, request);
+                return Ok(ApiResponse<GiftResponse>.SuccessResponse(result, "Gift Update Was Successful."));
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return StatusCode(500, ApiResponse<bool>.Unknown("Could not update gift, please try again."));
+            }
+        }
+
+        [HttpGet("{giftId}")]
+        [ProducesResponseType(typeof(ApiResponse<GiftResponse>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<bool>), 500)]
+
+        public async Task<IActionResult> GetGiftById([FromRoute] int giftId)
+        {
+            if (giftId <= 0)
+                return BadRequest(ApiResponse<bool>.BadRequest("Invalid Gift Id."));
+
+            try
+            {
+                var result = await _giftService.GetGiftById(giftId);
+                return Ok(ApiResponse<GiftResponse>.SuccessResponse(result, "Success."));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return StatusCode(500, ApiResponse<bool>.Unknown("Could not locate gift, please try again."));
+            }
+        }
     }
 }
