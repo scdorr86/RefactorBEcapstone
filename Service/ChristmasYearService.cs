@@ -34,5 +34,22 @@ namespace RefactorBEcapstone.Service
             var years = await _yearRepo.GetAllAsync();
             return _mapper.Map<List<YearResponse>>(years);
         }
+
+        public async Task<YearResponse> UpdateYear(int yearId, UpdateYearRequest request)
+        {
+            var yearToUpdate = await _yearRepo.GetByIdAsync(x => x.Id == yearId);
+
+            if(yearToUpdate == null)
+            {
+                throw new ApplicationException("Christmas Year Not Found.");
+            }
+
+            yearToUpdate.ListYear = !string.IsNullOrEmpty(request.ListYear) ? request.ListYear : yearToUpdate.ListYear;
+            yearToUpdate.YearBudget = request.YearBudget.HasValue ? request.YearBudget.Value : yearToUpdate.YearBudget;
+
+            await _yearRepo.Update(yearToUpdate);
+
+            return _mapper.Map<YearResponse>(yearToUpdate);
+        }
     }
 }

@@ -8,5 +8,7 @@ namespace RefactorBEcapstone.Service
     {
         Task<YearResponse> CreateChristmasYear(CreateYearRequest yearRequest);
         Task<List<YearResponse>> GetAllYears();
+        Task<YearResponse> UpdateYear(int id, UpdateYearRequest yearRequest);
+        Task<YearResponse> GetYearById(int id);
     }
 }

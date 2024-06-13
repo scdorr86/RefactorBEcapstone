@@ -8,5 +8,6 @@ namespace RefactorBEcapstone.Service
         Task<ListResponse> CreateChristmasList(CreateListRequest listRequest);
         Task<ListResponse> UpdateList(int listId, UpdateListRequest updateListRequest);
         Task<List<ListResponse>> GetAllLists();
+        Task<ListResponse> GetListById(int listId);
     }
 }
