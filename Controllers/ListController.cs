@@ -83,5 +83,25 @@ namespace RefactorBEcapstone.Controllers
                 return StatusCode(500, ApiResponse<bool>.Unknown("Could not return Lists. Please try again"));
             }
         }
+
+        [HttpGet("{listId}")]
+        [ProducesResponseType(typeof(ApiResponse<ListResponse>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<bool>), 500)]
+
+        public async Task<IActionResult> GetListById([FromRoute] int listId)
+        {
+            if (listId <= 0) return BadRequest(ApiResponse<bool>.BadRequest("Invalid List Id."));
+
+            try
+            {
+                var result = await _listService.GetListById(listId);
+                return Ok(ApiResponse<ListResponse>.SuccessResponse(result, "Success."));
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return StatusCode(500, ApiResponse<bool>.Unknown("Could not retrieve List, please try again."));
+            }
+        }
     }
 }

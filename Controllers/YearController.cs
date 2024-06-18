@@ -59,5 +59,45 @@ namespace RefactorBEcapstone.Controllers
                 return StatusCode(500, ApiResponse<bool>.Unknown("Could not return Years. Please try again"));
             }
         }
+
+        [HttpGet("{yearId}")]
+        [ProducesResponseType(typeof(ApiResponse<YearResponse>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<bool>), 500)]
+
+        public async Task<IActionResult> GetYearById(int yearId)
+        {
+            if (yearId <=0) { return BadRequest(ApiResponse<bool>.BadRequest("Invalid Year Id.")); }
+
+            try
+            {
+                var result = await _christmasYearService.GetYearById(yearId);
+                return Ok(ApiResponse<YearResponse>.SuccessResponse(result, "Success."));
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return StatusCode(500, ApiResponse<bool>.Unknown("Could not retrieve Christmas Year."));
+            }
+        }
+
+        [HttpPatch("update/{yearId}")]
+        [ProducesResponseType(typeof(ApiResponse<YearResponse>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<bool>), 500)]
+
+        public async Task<IActionResult> UpdateYear([FromRoute]int yearId, [FromBody]UpdateYearRequest updateYearRequest)
+        {
+            if (updateYearRequest == null || yearId <= 0) { return BadRequest(ApiResponse<bool>.BadRequest("Invalid Year Id or Year does not exist.")); }
+
+            try
+            {
+                var result = await _christmasYearService.UpdateYear(yearId, updateYearRequest);
+                return Ok(ApiResponse<YearResponse>.SuccessResponse(result, "Christmas Year was updated."));
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return StatusCode(500, ApiResponse<bool>.Unknown("Could not update Christmas Year, please try again."));
+            }
+        }
     }
 }
