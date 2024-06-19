@@ -52,5 +52,14 @@ namespace RefactorBEcapstone.Service
             return _mapper.Map<List<ListResponse>>(lists);
 
         }
+
+        public async Task<ListResponse> GetListById(int id)
+        {
+            var list = await _listRepo.GetByIdAsync(x => x.Id == id);
+
+            if(list == null) { throw new ApplicationException("List not found, please try again."); }
+
+            return _mapper.Map<ListResponse>(list);  
+        }
     }
 }
