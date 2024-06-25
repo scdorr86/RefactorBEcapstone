@@ -9,5 +9,6 @@ namespace RefactorBEcapstone.Service
         Task<List<GiftResponse>> GetAllGifts();
         Task<GiftResponse> UpdateGift(int giftId, UpdateGiftRequest request);
         Task<GiftResponse> GetGiftById(int giftId);
+        Task<GiftResponse> SoftDeleteGift(int giftId);
     }
 }
