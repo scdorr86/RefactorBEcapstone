@@ -100,5 +100,14 @@ namespace RefactorBEcapstone.Controllers
                 return StatusCode(500, ApiResponse<bool>.Unknown("Could not locate gift, please try again."));
             }
         }
+
+        [HttpDelete("{giftId}")]
+        [ProducesResponseType(typeof(ApiResponse<GiftResponse>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<bool>), 500)]
+
+        public async Task<IActionResult> SoftDeleteGift([FromRoute] int giftId)
+        {
+
+        }
     }
 }

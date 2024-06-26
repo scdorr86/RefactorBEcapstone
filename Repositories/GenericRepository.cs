@@ -55,5 +55,13 @@ namespace RefactorBEcapstone.Repositories
             });
         }
 
+        public async Task<TEntity> SoftDelete(TEntity objModel)
+        {
+            _context.Entry(objModel).Member("IsDeleted").CurrentValue = true;
+            _context.Entry(objModel).Member("DeletedDate").CurrentValue = DateTime.UtcNow;
+            await _context.SaveChangesAsync();
+            return objModel;
+        }
+
     }
 }

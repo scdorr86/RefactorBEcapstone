@@ -22,6 +22,7 @@ namespace RefactorBEcapstone.Service
         public async Task<GiftResponse> CreateGift(GiftRequest giftRequest)
         {
             var newGift = _mapper.Map<Models.Gift>(giftRequest);
+            newGift.IsDeleted = false;
             
             var result = await _giftRepo.AddAsync(newGift);
             var mappedResult = _mapper.Map<GiftResponse>(result);
@@ -61,6 +62,18 @@ namespace RefactorBEcapstone.Service
                 throw new ApplicationException("Gift not found.");
 
             return _mapper.Map<GiftResponse>(gift);
+        }
+
+        public async Task<GiftResponse> SoftDeleteGift(int giftId)
+        {
+            var giftToDelete = await _giftRepo.GetByIdAsync(x => x.Id == giftId);
+
+            if (giftToDelete == null) throw new ApplicationException("Gift not found, try again.");
+
+            var deletedGift = await _giftRepo.SoftDelete(giftToDelete);
+
+            return _mapper.Map<GiftResponse>(deletedGift);
+
         }
     }
 }

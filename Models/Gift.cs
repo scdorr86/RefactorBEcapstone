@@ -17,5 +17,7 @@ namespace RefactorBEcapstone.Models
         public AppUser User { get; set; }
         public List<ChristmasList> ChristmasLists { get; set; }
         public string OrderedFrom { get; set; }
+        public bool IsDeleted { get; set; } = false;
+        public DateTime? DeletedDate { get; set; }
     }
 }

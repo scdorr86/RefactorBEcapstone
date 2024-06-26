@@ -10,5 +10,7 @@ namespace RefactorBEcapstone.Repositories
 
         Task<TEntity> GetByIdAsync(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null);
         Task<IEnumerable<TEntity>> GetAllAsync(Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null);
+
+        Task<TEntity> SoftDelete(TEntity objModel);
     }
 }
