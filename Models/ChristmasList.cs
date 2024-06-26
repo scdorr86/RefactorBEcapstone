@@ -19,5 +19,7 @@ namespace RefactorBEcapstone.Models
         public decimal ListTotal => Gifts?.Sum(g => g.Price) ?? 0;
         public string UserId { get; set; }
         public AppUser User { get; set; }
+        public bool IsDeleted { get; set; } = false;
+        public DateTime? DeletedDate { get; set; }
     }
 }

@@ -107,7 +107,18 @@ namespace RefactorBEcapstone.Controllers
 
         public async Task<IActionResult> SoftDeleteGift([FromRoute] int giftId)
         {
+            if (giftId <= 0) return BadRequest(ApiResponse<bool>.BadRequest("Invalid Gift Id."));
 
+            try
+            {
+                var result = await _giftService.SoftDeleteGift(giftId);
+                return Ok((ApiResponse<GiftResponse>.SuccessResponse(result, "Gift was successfully deleted")));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return StatusCode(500, ApiResponse<bool>.Unknown("Gift could not be deleted."));
+            }
         }
     }
 }

@@ -61,5 +61,16 @@ namespace RefactorBEcapstone.Service
 
             return _mapper.Map<ListResponse>(list);  
         }
+
+        public async Task<ListResponse> SoftDeleteList(int listId)
+        {
+            var listToDelete = await _listRepo.GetByIdAsync(x => x.Id == listId);
+
+            if (listToDelete == null) throw new ApplicationException("List not found, please try again.");
+
+            var deletedList = await _listRepo.SoftDelete(listToDelete);
+
+            return _mapper.Map<ListResponse>(deletedList);
+        }
     }
 }

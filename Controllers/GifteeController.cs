@@ -97,6 +97,26 @@ namespace RefactorBEcapstone.Controllers
                 return StatusCode(500, ApiResponse<bool>.Unknown("Could not retrieve giftee, please try again."));
             }
         }
+
+        [HttpDelete("{gifteeId}")]
+        [ProducesResponseType(typeof(ApiResponse<GifteeResponse>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<bool>), 500)]
+
+        public async Task<IActionResult> SoftDeleteGiftee([FromRoute] int gifteeId)
+        {
+            if (gifteeId <= 0) return BadRequest(ApiResponse<bool>.BadRequest("Invalid Giftee Id."));
+
+            try
+            {
+                var result = await _gifteeService.SoftDeleteGiftee(gifteeId);
+                return Ok(ApiResponse<GifteeResponse>.SuccessResponse(result, "Giftee Successfully Deleted."));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return StatusCode(500, ApiResponse<bool>.Unknown("Giftee could not be deleted."));
+            }
+        }
     }
 
     

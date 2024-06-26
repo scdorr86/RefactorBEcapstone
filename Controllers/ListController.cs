@@ -103,5 +103,25 @@ namespace RefactorBEcapstone.Controllers
                 return StatusCode(500, ApiResponse<bool>.Unknown("Could not retrieve List, please try again."));
             }
         }
+
+        [HttpDelete("{listId}")]
+        [ProducesResponseType(typeof(ApiResponse<ListResponse>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<bool>), 500)]
+
+        public async Task<IActionResult> SoftDeleteList([FromRoute] int listId)
+        {
+            if (listId <= 0) throw new ArgumentException("Invalid List Id.");
+
+            try
+            {
+                var result = await _listService.SoftDeleteList(listId);
+                return Ok(ApiResponse<ListResponse>.SuccessResponse(result, "Success."));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return StatusCode(500, ApiResponse<bool>.Unknown("List could not be deleted."));
+            }
+        }
     }
 }

@@ -17,5 +17,7 @@ namespace RefactorBEcapstone.Models
         public List<ChristmasList> ChristmasLists { get; set; }
         public decimal ListsTotal => ChristmasLists?.Sum(l => l.ListTotal) ?? 0;
         public decimal BudgetVar => YearBudget - ListsTotal;
+        public bool IsDeleted { get; set; } = false;
+        public DateTime? DeletedDate { get; set; }
     }
 }
