@@ -58,5 +58,16 @@ namespace RefactorBEcapstone.Service
 
             return _mapper.Map<GifteeResponse>(giftee);
         }
+
+        public async Task<GifteeResponse> SoftDeleteGiftee(int gifteeId)
+        {
+            var gifteeToDelete = await _gifteeRepo.GetByIdAsync(x => x.Id == gifteeId);
+
+            if (gifteeToDelete == null) throw new ApplicationException("Giftee Not Found.");
+
+            var deletedGiftee = await _gifteeRepo.SoftDelete(gifteeToDelete);
+
+            return _mapper.Map<GifteeResponse>(deletedGiftee);
+        }
     }
 }

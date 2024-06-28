@@ -9,5 +9,6 @@ namespace RefactorBEcapstone.Service
         Task<ListResponse> UpdateList(int listId, UpdateListRequest updateListRequest);
         Task<List<ListResponse>> GetAllLists();
         Task<ListResponse> GetListById(int listId);
+        Task<ListResponse> SoftDeleteList(int listId);
     }
 }
