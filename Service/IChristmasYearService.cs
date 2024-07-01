@@ -10,5 +10,6 @@ namespace RefactorBEcapstone.Service
         Task<List<YearResponse>> GetAllYears();
         Task<YearResponse> UpdateYear(int id, UpdateYearRequest yearRequest);
         Task<YearResponse> GetYearById(int id);
+        Task<YearResponse> SoftDeleteYear(int id);
     }
 }

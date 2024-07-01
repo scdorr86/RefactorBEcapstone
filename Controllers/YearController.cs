@@ -99,5 +99,25 @@ namespace RefactorBEcapstone.Controllers
                 return StatusCode(500, ApiResponse<bool>.Unknown("Could not update Christmas Year, please try again."));
             }
         }
+
+        [HttpDelete("{yearId}")]
+        [ProducesResponseType(typeof(ApiResponse<YearResponse>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<bool>), 500)]
+
+        public async Task<IActionResult> SoftDeleteYear(int yearId)
+        {
+            if (yearId <= 0 || yearId == 0) return BadRequest(ApiResponse<bool>.BadRequest("Invalid Year Id. Please Try Again."));
+            
+            try
+            {
+                var result = await _christmasYearService.SoftDeleteYear(yearId);
+                return Ok(ApiResponse<YearResponse>.SuccessResponse(result, "Success."));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return StatusCode(500, ApiResponse<bool>.Unknown("Christmas Year could not be deleted. Please try again."));
+            }
+        }
     }
 }

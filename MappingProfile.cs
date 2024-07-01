@@ -23,7 +23,8 @@ namespace RefactorBEcapstone
 
         public void CreateYearMaps()
         {
-            _ = CreateMap<ChristmasYear, YearResponse>();
+            _ = CreateMap<ChristmasYear, YearResponse>()
+                .ForMember(yrResp => yrResp.ChristmasLists, opt => opt.MapFrom(chrYr => chrYr.ChristmasLists));
             _ = CreateMap<CreateYearRequest, ChristmasYear>();
         }
 

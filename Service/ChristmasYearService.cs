@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using RefactorBEcapstone.Models;
 using RefactorBEcapstone.Repositories;
 using RefactorBEcapstone.Year.Requests;
@@ -31,7 +32,7 @@ namespace RefactorBEcapstone.Service
 
         public async Task<List<YearResponse>> GetAllYears()
         {
-            var years = await _yearRepo.GetAllAsync();
+            var years = await _yearRepo.GetAllAsync(query => query.Include(y => y.ChristmasLists));
             return _mapper.Map<List<YearResponse>>(years);
         }
 
@@ -54,11 +55,23 @@ namespace RefactorBEcapstone.Service
 
         public async Task<YearResponse> GetYearById(int yearId)
         {
-            var year = await _yearRepo.GetByIdAsync(x => x.Id == yearId);
+            var year = await _yearRepo.GetByIdAsync(x => x.Id == yearId,
+                include: source => source.Include(x => x.ChristmasLists));
 
             if (year == null) { throw new ApplicationException("Year Not Found. Please Try Again."); }
 
             return _mapper.Map<YearResponse>(year);
+        }
+
+        public async Task<YearResponse> SoftDeleteYear(int yearId)
+        {
+            var yearToDelete = await _yearRepo.GetByIdAsync(y => y.Id == yearId);
+
+            if (yearToDelete == null) throw new ApplicationException("Year Not Found. Please Try Again.");
+
+            var deletedYear = await _yearRepo.SoftDelete(yearToDelete);
+
+            return _mapper.Map<YearResponse>(yearToDelete);
         }
     }
 }

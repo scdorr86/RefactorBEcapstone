@@ -1,4 +1,5 @@
-﻿using RefactorBEcapstone.Models;
+﻿using RefactorBEcapstone.List.Responses;
+using RefactorBEcapstone.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,6 @@ namespace RefactorBEcapstone.Year.Responses
 
         public decimal ListsTotal {  get; set; }
         public decimal BudgetVar {  get; set; }
+        public List<ListResponse> ChristmasLists { get; set; }
     }
 }
