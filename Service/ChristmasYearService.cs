@@ -32,7 +32,7 @@ namespace RefactorBEcapstone.Service
 
         public async Task<List<YearResponse>> GetAllYears()
         {
-            var years = await _yearRepo.GetAllAsync();
+            var years = await _yearRepo.GetAllAsync(query => query.Include(y => y.ChristmasLists));
             return _mapper.Map<List<YearResponse>>(years);
         }
 
