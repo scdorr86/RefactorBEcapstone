@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using RefactorBEcapstone.Contexts;
@@ -11,9 +12,11 @@ using RefactorBEcapstone.Contexts;
 namespace RefactorBEcapstone.Migrations
 {
     [DbContext(typeof(RefactorDbContext))]
-    partial class RefactorDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240628213624_YearModelUpdateForList")]
+    partial class YearModelUpdateForList
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

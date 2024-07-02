@@ -14,6 +14,7 @@ namespace RefactorBEcapstone.List.Responses
         public int GifteeId { get; set; }
         public int ChristmasYearId { get; set; }
         public string UserId { get; set; }
+        public decimal ListTotal { get; set; }
  
     }
 }
