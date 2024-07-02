@@ -12,8 +12,8 @@ using RefactorBEcapstone.Contexts;
 namespace RefactorBEcapstone.Migrations
 {
     [DbContext(typeof(RefactorDbContext))]
-    [Migration("20240628213624_YearModelUpdateForList")]
-    partial class YearModelUpdateForList
+    [Migration("20240702204344_ListResponseModelUpdate")]
+    partial class ListResponseModelUpdate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -170,38 +170,6 @@ namespace RefactorBEcapstone.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("RefactorBEcapstone.List.Responses.ListResponse", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ChristmasYearId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("GifteeId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("ListName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<decimal>("ListTotal")
-                        .HasColumnType("numeric");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ChristmasYearId");
-
-                    b.ToTable("ListResponse");
                 });
 
             modelBuilder.Entity("RefactorBEcapstone.Models.AppUser", b =>
@@ -494,19 +462,10 @@ namespace RefactorBEcapstone.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("RefactorBEcapstone.List.Responses.ListResponse", b =>
-                {
-                    b.HasOne("RefactorBEcapstone.Models.ChristmasYear", null)
-                        .WithMany("ChristmasLists")
-                        .HasForeignKey("ChristmasYearId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("RefactorBEcapstone.Models.ChristmasList", b =>
                 {
                     b.HasOne("RefactorBEcapstone.Models.ChristmasYear", "ChristmasYear")
-                        .WithMany()
+                        .WithMany("ChristmasLists")
                         .HasForeignKey("ChristmasYearId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

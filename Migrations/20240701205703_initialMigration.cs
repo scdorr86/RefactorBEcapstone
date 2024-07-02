@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace RefactorBEcapstone.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class initialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -169,7 +169,9 @@ namespace RefactorBEcapstone.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     ListYear = table.Column<string>(type: "text", nullable: false),
                     YearBudget = table.Column<decimal>(type: "numeric", nullable: false),
-                    UserId = table.Column<string>(type: "text", nullable: false)
+                    UserId = table.Column<string>(type: "text", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
+                    DeletedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -191,10 +193,6 @@ namespace RefactorBEcapstone.Migrations
                     FirstName = table.Column<string>(type: "text", nullable: false),
                     LastName = table.Column<string>(type: "text", nullable: false),
                     UserId = table.Column<string>(type: "text", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    CreatedById = table.Column<string>(type: "text", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UpdatedById = table.Column<string>(type: "text", nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
                     DeletedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
@@ -220,10 +218,6 @@ namespace RefactorBEcapstone.Migrations
                     ImageUrl = table.Column<string>(type: "text", nullable: false),
                     UserId = table.Column<string>(type: "text", nullable: false),
                     OrderedFrom = table.Column<string>(type: "text", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    CreatedById = table.Column<string>(type: "text", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UpdatedById = table.Column<string>(type: "text", nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
                     DeletedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
@@ -248,10 +242,6 @@ namespace RefactorBEcapstone.Migrations
                     ChristmasYearId = table.Column<int>(type: "integer", nullable: false),
                     GifteeId = table.Column<int>(type: "integer", nullable: false),
                     UserId = table.Column<string>(type: "text", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    CreatedById = table.Column<string>(type: "text", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UpdatedById = table.Column<string>(type: "text", nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
                     DeletedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },

@@ -11,5 +11,6 @@ namespace RefactorBEcapstone.Contexts
         public DbSet<ChristmasYear> ChristmasYears { get; set; }
         public DbSet<Models.Gift> Gifts { get; set; }
         public DbSet<Models.Giftee> Giftees { get; set; }
+
     }
 }
