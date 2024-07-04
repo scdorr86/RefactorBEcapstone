@@ -30,7 +30,8 @@ namespace RefactorBEcapstone
 
         public void CreateListMaps()
         {
-            _ = CreateMap<ChristmasList, ListResponse>();
+            _ = CreateMap<ChristmasList, ListResponse>()
+                .ForMember(listResp => listResp.ListTotal, opt => opt.MapFrom(chrLst => chrLst.ListTotal)); ;
             _ = CreateMap<CreateListRequest, ChristmasList>();
         }
 
