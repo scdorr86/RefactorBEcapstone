@@ -12,8 +12,8 @@ using RefactorBEcapstone.Contexts;
 namespace RefactorBEcapstone.Migrations
 {
     [DbContext(typeof(RefactorDbContext))]
-    [Migration("20240625210404_AddSoftDeleteProps1")]
-    partial class AddSoftDeleteProps1
+    [Migration("20240701205703_initialMigration")]
+    partial class initialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -263,8 +263,14 @@ namespace RefactorBEcapstone.Migrations
                     b.Property<int>("ChristmasYearId")
                         .HasColumnType("integer");
 
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<int>("GifteeId")
                         .HasColumnType("integer");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("ListName")
                         .IsRequired()
@@ -292,6 +298,12 @@ namespace RefactorBEcapstone.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("ListYear")
                         .IsRequired()
@@ -359,9 +371,15 @@ namespace RefactorBEcapstone.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("LastName")
                         .IsRequired()
