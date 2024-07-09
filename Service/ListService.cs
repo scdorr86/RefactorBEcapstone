@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
 using RefactorBEcapstone.List.Requests;
 using RefactorBEcapstone.List.Responses;
 using RefactorBEcapstone.Models;
@@ -48,7 +49,7 @@ namespace RefactorBEcapstone.Service
 
         public async Task<List<ListResponse>> GetAllLists()
         {
-            var lists = await _listRepo.GetAllAsync();
+            var lists = await _listRepo.GetAllAsync(query => query.Include(l => l.Gifts));
             return _mapper.Map<List<ListResponse>>(lists);
 
         }
