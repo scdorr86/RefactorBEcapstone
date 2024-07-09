@@ -123,5 +123,25 @@ namespace RefactorBEcapstone.Controllers
                 return StatusCode(500, ApiResponse<bool>.Unknown("List could not be deleted."));
             }
         }
+
+        [HttpPatch("addGift/{listId}")]
+        [ProducesResponseType(typeof(ApiResponse<ListResponse>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<bool>), 500)]
+
+        public async Task<IActionResult> AddGiftToList([FromRoute] int listId, [FromQuery] int giftId)
+        {
+            if (listId <= 0 || giftId <= 0) return BadRequest(ApiResponse<bool>.BadRequest("Invalid List or Gift Id. Please try again."));
+
+            try
+            {
+                var result = await _listService.AddGiftToList(listId, giftId);
+                return Ok(ApiResponse<ListResponse>.SuccessResponse(result, "Success."));
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return StatusCode(500, ApiResponse<bool>.Unknown("Gift was not added to List. Please try again"));
+            }
+        }
     }
 }
