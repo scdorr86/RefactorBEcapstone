@@ -13,12 +13,14 @@ namespace RefactorBEcapstone.Service
         private readonly IMapper _mapper;
         private readonly IGenericRepository<ChristmasList> _listRepo;
         private readonly IGenericRepository<AppUser> _userRepo;
+        private readonly IGenericRepository<Models.Gift> _giftListRepo;
 
-        public ListService(IMapper mapper, IGenericRepository<ChristmasList> listRepo, IGenericRepository<AppUser> userRepo)
+        public ListService(IMapper mapper, IGenericRepository<ChristmasList> listRepo, IGenericRepository<AppUser> userRepo, IGenericRepository<Models.Gift> giftListRepo)
         {
             _mapper = mapper;
             _listRepo = listRepo;
             _userRepo = userRepo;
+            _giftListRepo = giftListRepo;
         }
 
         public async Task<ListResponse> CreateChristmasList(CreateListRequest listRequest)
@@ -56,7 +58,9 @@ namespace RefactorBEcapstone.Service
 
         public async Task<ListResponse> GetListById(int id)
         {
-            var list = await _listRepo.GetByIdAsync(x => x.Id == id);
+            var list = await _listRepo.GetByIdAsync(
+                x => x.Id == id,
+                    query => query.Include(l => l.Gifts));
 
             if(list == null) { throw new ApplicationException("List not found, please try again."); }
 
@@ -72,6 +76,23 @@ namespace RefactorBEcapstone.Service
             var deletedList = await _listRepo.SoftDelete(listToDelete);
 
             return _mapper.Map<ListResponse>(deletedList);
+        }
+
+        public async Task<ListResponse> AddGiftToList(int listId, int giftId)
+        {
+            var list = await _listRepo.GetByIdAsync(
+                x => x.Id == listId, 
+                    query => query.Include(l => l.Gifts));
+            var gift = await _giftListRepo.GetByIdAsync(x => x.Id == giftId);
+
+            if (list == null) throw new ApplicationException("List not found, please try again.");
+            if (gift == null) throw new ApplicationException("Gift not found, please try another.");
+
+            list.Gifts.Add(gift);
+            
+            await _listRepo.Update(list);
+
+            return _mapper.Map<ListResponse>(list);
         }
     }
 }
